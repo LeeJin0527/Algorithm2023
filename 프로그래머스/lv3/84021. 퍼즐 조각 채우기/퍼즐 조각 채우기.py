@@ -1,6 +1,5 @@
 import copy
 def dfs(graph, res_x, res_y, position, num, visited):
-    visited[res_x][res_y] = True
     res = [position]
     dx = [-1, 1, 0, 0]
     dy = [0, 0, -1, 1]
@@ -28,6 +27,7 @@ def solution(game_board, table):
         for y in range(n):
             if game_board[x][y] == 0 and not boardVisited[x][y]:
                 game_board[x][y] = 2
+                boardVisited[x][y] = True
                 result = dfs(game_board, x, y, [0, 0], 0, boardVisited)
                 blocks.append(result)
 
@@ -38,6 +38,7 @@ def solution(game_board, table):
         for x in range(n):
             for y in range(n):
                 if table_copy[x][y] == 1 and not tableVisited[x][y]:
+                    tableVisited[x][y] = True
                     table_copy[x][y] = 2
                     temp = dfs(table_copy, x, y, [0, 0], 1, tableVisited)
                     if temp in blocks:
