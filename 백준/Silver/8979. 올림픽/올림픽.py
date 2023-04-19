@@ -1,20 +1,18 @@
-import sys
-input = sys.stdin.readline
 n, k = map(int, input().split())
 lst = []
 for _ in range(n):
-	lst.append(list(map(int, input().split())))
+    lst.append(list(map(int, input().split())))
 
-
-answer = sorted(lst, key=lambda x: (-x[1], -x[2], -x[3]))
-
-tmp = []
-rank = 0
-for i in range(n):
-	if answer[i][1:] not in tmp:
-		tmp.append(answer[i][1:])
-		rank += 1
-	if answer[i][0] == k:
-		print(rank)
-		break
-
+lst.sort(key=lambda x: (-x[1], -x[2], -x[3]))
+rank = 1
+if lst[0][0] == k:
+    print(1)
+else:
+    temp = lst[0][1:]
+    for index in range(1, len(lst)):
+        if lst[index][0] == k:
+            print(rank)
+            break
+        if temp != lst[index][1:]:
+            rank += 1
+            temp = lst[index][1:]
