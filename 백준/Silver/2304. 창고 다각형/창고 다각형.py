@@ -1,28 +1,24 @@
 n = int(input())
 storages = []
-checkHeight = []
+maxX = 0
 answer = 0
 for _ in range(n):
     a, b = map(int, input().split())
     storages.append([a, b])
-storages.sort()
+    maxX = max(maxX, a)
+checkHeight = [0 for _ in range(maxX+1)]
 for storage in storages:
-    checkHeight.append(storage[1])
-cur_x, cur_y = storages[0][0], storages[0][1]
-for index in range(len(storages)):
-    if storages[index][0] > cur_x and storages[index][1] >= cur_y:
-        answer += cur_y * (storages[index][0] - cur_x)
-        cur_x = storages[index][0]
-        cur_y = storages[index][1]
-    try:
-        if storages[index][1] > max(checkHeight[index + 1:]):
-            cur_x = storages[index][0] + 1
-            cur_y = max(checkHeight[index + 1:])
-
-            answer += storages[index][1]
-    except:
-        pass
-    if index == len(storages) - 1:
-        answer += storages[-1][1]
-
+    x, y = storage
+    checkHeight[x] = y
+standard = checkHeight.index(max(checkHeight))
+startLeft = 0
+startRight = checkHeight[-1]
+for left in range(standard+1):
+    if checkHeight[left] > startLeft:
+        startLeft = checkHeight[left]
+    answer += startLeft
+for right in range(len(checkHeight)-1, standard, -1):
+    if checkHeight[right] > startRight:
+        startRight = checkHeight[right]
+    answer += startRight
 print(answer)
