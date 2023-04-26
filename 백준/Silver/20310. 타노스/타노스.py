@@ -1,21 +1,26 @@
 import sys
 input = sys.stdin.readline
 elements = list(map(int, input().rstrip()))
-oneCount = elements.count(1)
+oneCount = elements.count(1) // 2
 zeroCount = elements.count(0) // 2
 
 n = len(elements)
 
-candidate = []
+zeroFill = []
+oneFill = []
+result = []
 for index in range(len(elements)):
     if elements[index] == 0 and zeroCount > 0:
         zeroCount -= 1
-        candidate.append(0)
-
-
-fillOneToTheRight = len(elements) // 2 - len(candidate)
-for _ in range(fillOneToTheRight):
-    candidate.append(1)
-candidate = list(map(str, candidate))
-print(''.join(candidate))
-
+        zeroFill.append(index)
+for index in range(len(elements)-1, -1, -1):
+    if elements[index] == 1 and oneCount > 0:
+        oneCount -= 1
+        oneFill.append(index)
+for value in range(n):
+    if value in zeroFill:
+        result.append(0)
+    if value in oneFill:
+        result.append(1)
+result = list(map(str, result))
+print(''.join(result))
