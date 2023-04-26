@@ -1,12 +1,21 @@
-from collections import defaultdict
-check = defaultdict(int)
-datas = input().rstrip()
-for data in datas:
-    check[data] += 1
-result = []
-for che in check:
-    tmp = check[che] // 2
-    for _ in range(tmp):
-        result.append(che)
-result.sort()
-print(''.join(result))
+import sys
+input = sys.stdin.readline
+elements = list(map(int, input().rstrip()))
+oneCount = elements.count(1)
+zeroCount = elements.count(0) // 2
+
+n = len(elements)
+
+candidate = []
+for index in range(len(elements)):
+    if elements[index] == 0 and zeroCount > 0:
+        zeroCount -= 1
+        candidate.append(0)
+
+
+fillOneToTheRight = len(elements) // 2 - len(candidate)
+for _ in range(fillOneToTheRight):
+    candidate.append(1)
+candidate = list(map(str, candidate))
+print(''.join(candidate))
+
