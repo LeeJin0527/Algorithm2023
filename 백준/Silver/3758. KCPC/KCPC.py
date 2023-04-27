@@ -1,29 +1,37 @@
+import sys
+input = sys.stdin.readline
 T = int(input())
 for _ in range(T):
     n, k, t, m = map(int, input().split())
-    questionNumbersAndScores = [[[] for _ in range(k+1)] for _ in range(n+1)]
-    submitCounts = [0 for _ in range(n+1)]
-    submitTime = [int(1e9) for _ in range(n+1)]
-    for index in range(1, m+1):
-        teamID, questionNumber, score = map(int, input().split())
-        submitCounts[teamID] += 1
-        submitTime[teamID] = index
-        questionNumbersAndScores[teamID][questionNumber].append(score)
+    submitCount = [0] * (n+1)
+    lastSubmit = [0] * (n+1)
+    scores = [0] * (n+1)
     result = []
-    for index, question in enumerate(questionNumbersAndScores):
-        tmp = 0
-        for each in question:
+    kcpc = [[[] for _ in range(k+1)] for _ in range(n+1)]
+    for index in range(m):
+        teamID, number, score = map(int, input().split())
+        submitCount[teamID] += 1
+        lastSubmit[teamID] = index
+        kcpc[teamID][number].append(score)
+    for index in range(1, len(kcpc)):
+        check = kcpc[index]
+        for number in range(len(check)):
+            if check[number]:
+                kcpc[index][number] = [max(kcpc[index][number])]
+    for index, team in enumerate(kcpc):
+        temp = 0
+        for each in team:
             if each:
-               tmp += max(each)
-        result.append([index, tmp])
-    for i in range(len(result)):
-        result[i].append(submitCounts[i])
-        result[i].append(submitTime[i])
-    result = result[1:]
-    result.sort(key=lambda x:(-x[1], x[2], x[3]))
+                temp += each[0]
+        scores[index] = temp
+
+    for index in range(n+1):
+        result.append([scores[index], submitCount[index], lastSubmit[index], index])
+    result.sort(key = lambda x: (-x[0], x[1], x[2]))
     rank = 1
-    for res in result:
-        if res[0] == t:
+    for index in range(len(result)):
+        if result[index][-1] == t:
             print(rank)
             break
         rank += 1
+
