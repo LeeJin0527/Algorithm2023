@@ -1,18 +1,15 @@
 n = int(input())
 balls = input().rstrip()
+count = []
+rightSideRedBalls = balls.rstrip('R')
+count.append(rightSideRedBalls.count('R'))
 
-moveCount = []
+rightSideBlueBalls = balls.rstrip('B')
+count.append(rightSideBlueBalls.count('B'))
 
-rightSideRedBallAssemble = balls.rstrip("R")
-moveCount.append(rightSideRedBallAssemble.count('R'))
+leftSideRedBalls = balls.lstrip('R')
+count.append(leftSideRedBalls.count('R'))
 
-rightSideBlueBallAssemble = balls.rstrip("B")
-moveCount.append(rightSideBlueBallAssemble.count('B'))
-
-leftSideRedBallAssemble = balls.lstrip("R")
-moveCount.append(leftSideRedBallAssemble.count('R'))
-
-leftSideBlueBallAssemble = balls.lstrip("B")
-moveCount.append(leftSideBlueBallAssemble.count('B'))
-
-print(min(moveCount))
+leftSideBlueBalls = balls.lstrip('B')
+count.append(leftSideBlueBalls.count('B'))
+print(min(count))
