@@ -1,23 +1,24 @@
 from collections import deque
 t = int(input())
 for _ in range(t):
-    answer = 0
-    numbers = list(map(int, input().split()))
-    case = numbers[0]
-    numbers = deque(numbers[1:])
+    students = list(map(int, input().split()))
+    student = students[0]
+    students = students[1:]
     sortedStudents = deque()
-    firstStudent = numbers.popleft()
-    sortedStudents.append(firstStudent)
-    while numbers:
-        checkNumber = numbers.popleft()
-        if checkNumber > sortedStudents[-1]:
-            sortedStudents.append(checkNumber)
+    sortedStudents.append(students[0])
+    students = deque(students[1:])
+    answer = 0
+    while students:
+        x = students.popleft()
+        if x > sortedStudents[-1]:
+            sortedStudents.append(x)
         else:
-            index = len(sortedStudents)-1
-            count = 0
-            while sortedStudents[index] > checkNumber and index >= 0:
-                index -= 1
-                count += 1
-            sortedStudents.insert(len(sortedStudents) - count,  checkNumber)
-            answer += count
-    print(f'{case} {answer}')
+            check = 0
+            count = len(sortedStudents)-1
+            while sortedStudents[count] > x and count >= 0:
+                count -= 1
+                check += 1
+            answer += check
+
+            sortedStudents.insert(count+1, x)
+    print(f'{student} {answer}')
