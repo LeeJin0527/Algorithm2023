@@ -27,7 +27,7 @@ for index in range(t):
             if check[j] == each and same == maximumSameCount:
                 break
 
-        if same == maximumSameCount and temp.count(each) == maximumSameCount:
+        if same == maximumSameCount :
             shortestLength = min(shortestLength, cnt)
             longestLength = max(longestLength, cnt)
     if shortestLength == int(1e9) or longestLength == 0:
