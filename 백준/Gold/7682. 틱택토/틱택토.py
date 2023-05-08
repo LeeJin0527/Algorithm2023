@@ -72,20 +72,17 @@ while True:
         if oCount > 0:
             print("invalid")
             continue
-        elif origin.count('X') == origin.count('O') + 1:
-            print("valid")
-            continue
+        else:
+            if origin.count('X') == origin.count('O') + 1:
+                print("valid")
+                continue
     # Y 승리
-    if oCount > 0:
+    elif oCount > 0:
         if origin.count('X') == origin.count('O'):
             print("valid")
-            continue
-        else:
-            print("invalid")
             continue
     # 무승부
     elif origin.count('X') == 5 and origin.count('O') == 4:
         print("valid")
         continue
-    else:
-        print("invalid")
+    print("invalid")
