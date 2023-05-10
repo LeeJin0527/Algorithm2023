@@ -1,17 +1,18 @@
 import math
 def solution(progresses, speeds):
     answer = []
+    works = []
+    stack = []
+    n = len(progresses)
     for index, value in enumerate(progresses):
-        progresses[index] = math.ceil((100 - value) / speeds[index])
-    start = progresses[0]
-    cnt = 0
-    for progress in progresses:
-        if start >= progress:
-            cnt += 1
-        else:
-            answer.append(cnt)
-            start = progress
-            cnt = 1
-    answer.append(cnt)
-    
+        works.append(math.ceil((100 - value) / speeds[index]))
+    index = 0
+    while index < n:
+        check = 1
+        cnt = 1
+        while index + check < n and works[index] >= works[index+check]:
+            check += 1
+        answer.append(check)
+        index += check
+    print(answer)
     return answer
