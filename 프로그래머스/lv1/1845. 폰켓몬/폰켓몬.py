@@ -1,5 +1,7 @@
 def solution(nums):
+    n = len(nums)
     check = set(nums)
-    if len(check) >= len(nums) // 2:
-        return len(nums) // 2
+    if len(check) >= n // 2:
+        return n // 2
     return len(check)
+    
