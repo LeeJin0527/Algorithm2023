@@ -1,23 +1,24 @@
 import heapq
-def check(lst, target):
-    for l in lst:
-        if l < target:
-            return False
-    return True
-
 def solution(scoville, K):
+    def check(lst):
+        for l in lst:
+            if l < K:
+                return False
+        return True
+    
+    answer = 0
     scoville.sort()
     heapq.heapify(scoville)
-    cnt = 0
     while scoville:
-        if check(scoville, K) :
-                return cnt
-        if len(scoville) == 1:
-            if check(scoville, K) :
-                return cnt
-            return -1
-        first = heapq.heappop(scoville)
-        second = heapq.heappop(scoville)
-        heapq.heappush(scoville, first + 2* second)
-        cnt += 1
-    return -1
+        if len(scoville) <= 1:
+            break
+        if check(scoville):
+            break
+        answer += 1
+        if len(scoville) >= 2:
+            x = heapq.heappop(scoville)
+            y = heapq.heappop(scoville)
+            heapq.heappush(scoville, x + (2*y))
+    if check(scoville) == False:
+        return -1
+    return answer
