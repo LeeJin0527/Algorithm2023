@@ -1,10 +1,10 @@
 def solution(routes):
     answer = 0
-    camera = -30001
     routes.sort(key=lambda x: x[1])
+    camera = -100001
     for route in routes:
-        start, end = route
-        if camera < start:
+        if camera < route[0]:
             answer += 1
-            camera = end
+            camera = route[1]
+    
     return answer
