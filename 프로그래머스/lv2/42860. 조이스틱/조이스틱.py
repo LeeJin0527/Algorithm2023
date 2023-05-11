@@ -1,13 +1,18 @@
 def solution(name):
     answer = 0
-    min_value = int(1e9)
+    for alpha in name:
+        check = min(ord(alpha) - ord('A'), ord('Z') + 1 - ord(alpha))
+        answer += check
+    minValue = int(1e9)
     for index, value in enumerate(name):
-        first = ord('Z') - ord(value) + 1
-        second = ord(value) - ord('A')
-        answer += min(first, second)
-        next = index + 1
-        while next < len(name) and name[next] == 'A':
-            next += 1
-        min_value = min(min_value, index*2 + (len(name) - next), index + 2*(len(name) - next))
-    answer += min_value
+        check = index + 1
+        while check < len(name) and name[check] == 'A':
+            check += 1
+    
+        first = index * 2 + len(name) - check 
+        second = index + 2 * (len(name) - check)
+        temp = min(first, second)
+        minValue = min(temp, minValue)
+    answer += minValue
+    
     return answer
