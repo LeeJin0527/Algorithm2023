@@ -1,8 +1,8 @@
-from collections import deque 
+from collections import deque
 def can_change(start, end):
     cnt = 0
-    for index in range(len(start)):
-        if start[index] != end[index]:
+    for index, value in enumerate(start):
+        if value != end[index]:
             cnt += 1
     if cnt == 1:
         return True
@@ -19,7 +19,8 @@ def solution(begin, target, words):
         for word in words:
             if can_change(x, word):
                 if word == target:
-                    return cnt+1
+                    return cnt + 1
                 else:
                     q.append([word, cnt+1])
+            
     return answer
