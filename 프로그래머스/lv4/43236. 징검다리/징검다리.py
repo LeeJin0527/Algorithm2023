@@ -1,15 +1,16 @@
+import copy
 def solution(distance, rocks, n):
     answer = 0
     rocks.sort()
     start, end = 0, distance
     while start <= end:
-        mid = (start+ end) // 2
-        pre_rock, cnt = 0, 0
-        for rock in rocks:
-            if rock - pre_rock < mid:
+        mid = (start + end) // 2
+        pre, cnt = 0, 0
+        for index, value in enumerate(rocks):
+            if value - pre < mid:
                 cnt += 1
             else:
-                pre_rock = rock
+                pre = value
             if cnt > n:
                 break
         if cnt > n:
@@ -17,4 +18,5 @@ def solution(distance, rocks, n):
         else:
             answer = mid
             start = mid + 1
+            
     return answer
