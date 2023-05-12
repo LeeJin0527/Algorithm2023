@@ -1,50 +1,53 @@
 import copy
-def dfs(graph, res_x, res_y, position, num, visited):
-    res = [position]
-    dx = [-1, 1, 0, 0]
-    dy = [0, 0, -1, 1]
-    for index in range(4):
-        nx = res_x + dx[index]
-        ny = res_y + dy[index]
-        if nx < 0 or ny < 0 or nx >= len(graph) or ny >= len(graph[0]):
-            continue
-        if graph[nx][ny] == num and not visited[nx][ny]:
+
+def dfs(graph, x, y, position, n, num):
+    dic = {0:[-1, 0], 1:[0, 1], 2:[1, 0], 3:[0, -1]}
+
+    ret = [position]
+
+    for i in range(4):
+        nx = x + dic[i][0]
+        ny = y + dic[i][1]
+
+        if 0 <= nx < n and 0 <= ny < n and graph[nx][ny] == num:
             graph[nx][ny] = 2
-            visited[nx][ny] = True
-            res = res + dfs(graph, nx, ny, [position[0] + dx[index], position[1] + dy[index]], num, visited)
-    return res
+            ret = ret + dfs(graph, nx, ny, [position[0]+dic[i][0], position[1]+dic[i][1]], n, num)
+
+    return ret
 
 def rotate(lst):
-    res = list(map(list, zip(*lst[::-1])))
-    return res
+    n = len(lst)
+
+    ret = list(map(list, zip(*lst[::-1])))
+
+    return ret
 
 def solution(game_board, table):
     answer = 0
-    blocks = []
-    n = len(game_board)
-    boardVisited = [[False] * n for _ in range(n)]
-    for x in range(n):
-        for y in range(n):
-            if game_board[x][y] == 0 and not boardVisited[x][y]:
-                game_board[x][y] = 2
-                boardVisited[x][y] = True
-                result = dfs(game_board, x, y, [0, 0], 0, boardVisited)
-                blocks.append(result)
+    game_board_copy = copy.deepcopy(game_board)
 
-    for _ in range(4):
-        tableVisited = [[False] * n for _ in range(n)]
+    n = len(game_board)
+    block = []
+
+    for i in range(n):
+        for j in range(n):
+            if game_board_copy[i][j] == 0:
+                game_board_copy[i][j] = 2
+                result = dfs(game_board_copy, i, j, [0, 0], n, 0)[1:]
+                block.append(result)
+    for r in range(4):
         table = rotate(table)
-        table_copy = copy.deepcopy(table)
-        for x in range(n):
-            for y in range(n):
-                if table_copy[x][y] == 1 and not tableVisited[x][y]:
-                    tableVisited[x][y] = True
-                    table_copy[x][y] = 2
-                    temp = dfs(table_copy, x, y, [0, 0], 1, tableVisited)
-                    if temp in blocks:
-                        answer += len(temp)
-                        blocks.remove(temp)
-                        table = copy.deepcopy(table_copy)
+        table_rotate_copy = copy.deepcopy(table)
+
+        for i in range(n):
+            for j in range(n):
+                if table_rotate_copy[i][j] == 1:
+                    table_rotate_copy[i][j] = 2
+                    result = dfs(table_rotate_copy, i, j, [0, 0], n, 1)[1:]
+                    if result in block:
+                        block.pop(block.index(result))
+                        answer += (len(result) + 1)
+                        table = copy.deepcopy(table_rotate_copy)
                     else:
-                        table_copy = copy.deepcopy(table)
+                        table_rotate_copy = copy.deepcopy(table)
     return answer
