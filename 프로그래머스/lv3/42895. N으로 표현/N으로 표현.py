@@ -1,24 +1,26 @@
-
 def solution(N, number):
     answer = 0
-    dic, check = dict(), set()
-    for index in range(1, 9):
-        preCheck = int(str(N) * index)
-        if preCheck == number:
-            return index
-        dic[index] = [preCheck]
-        check.add(preCheck)
+    check = set()
+    dic = dict()
     check.add(0)
-    for i in range(2, 9):
-        for j in range(1, i):
-            k = i - j
+    for index in range(1, 9):
+        num = int(index * str(N))
+        if num == number:
+            return index
+        check.add(num)
+        dic[index] = [num]
+
+    for index in range(2, 9):
+        for j in range(1, index):
+            k = index - j
             for eachJ in dic[j]:
                 for eachK in dic[k]:
-                    temp = [eachJ + eachK, abs(eachJ - eachK), eachJ // eachK , eachJ * eachK, eachK // eachJ]
+                    temp = [eachJ + eachK, abs(eachJ - eachK), eachJ // eachK, eachJ * eachK]
                     for tem in temp:
-                        if tem not in check:
-                            if tem == number:
-                                return i
-                            check.add(tem)
-                            dic[i].append(tem)
+                        if tem in check:
+                            continue
+                        if tem == number:
+                            return index
+                        dic[index].append(tem)
+                        check.add(tem)
     return -1
