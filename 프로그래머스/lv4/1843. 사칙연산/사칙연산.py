@@ -1,33 +1,31 @@
-def solution(array):
+def solution(arr):
     answer = -1
-    for index, value in enumerate(array):
-        if index % 2 == 0:
-            array[index] = int(value)
-    n = len(array)
-    minDp = [[0 for _ in range(n)] for _ in range(n)]
-    maxDp = [[0 for _ in range(n)] for _ in range(n)]
+    n = len(arr)
+    max_dp = [[0 for _ in range(n)] for _ in range(n)]
+    min_dp = [[0 for _ in range(n)] for _ in range(n)]
     
-    for index in range(0, n, 2):
-        maxDp[index][index] = array[index]
-        minDp[index][index] = array[index]
-
-    for x in range(3, n+1, 2):
-        for start in range(0, n-1, 2):
-            # end - start +1 = x
-            end = x + start - 1
-            if end >= n:
+    for index in range(0, len(arr), 2):
+        arr[index] = int(arr[index])
+        max_dp[index][index] = int(arr[index])
+        min_dp[index][index] = int(arr[index])
+    
+    for index in range(3, len(arr)+1, 2):
+        for left in range(0, len(arr), 2):
+            right = index + left - 1
+            if right >= len(arr):
                 break
-            maxTemp = []
-            minTemp = []
-            
-            for operation in range(start+1, end, 2):
-                if array[operation] == '+':
-                    maxTemp.append(maxDp[start][operation-1] + maxDp[operation+1][end])
-                    minTemp.append(minDp[start][operation-1] + minDp[operation+1][end])
-                elif array[operation] == '-':
-                    maxTemp.append(maxDp[start][operation-1] - minDp[operation+1][end])
-                    minTemp.append(minDp[start][operation-1] - maxDp[operation+1][end])
-            maxDp[start][end] = max(maxTemp)
-            minDp[start][end] = min(minTemp)
-    answer = maxDp[0][-1]  
-    return answer
+            print(left, right)
+            checkMinValue = []
+            checkMaxValue = []
+            for operator in range(left+1, right, 2):
+                if operator >= len(arr):
+                    break
+                if arr[operator] == '-':
+                    checkMaxValue.append(max_dp[left][operator-1] - min_dp[operator+1][right])
+                    checkMinValue.append(min_dp[left][operator-1] - max_dp[operator+1][right])
+                elif arr[operator] == '+':
+                    checkMaxValue.append(max_dp[left][operator-1] + max_dp[operator+1][right])
+                    checkMinValue.append(min_dp[left][operator-1] + min_dp[operator+1][right])
+            max_dp[left][right] = max(checkMaxValue)
+            min_dp[left][right] = min(checkMinValue)
+    return max_dp[0][-1]
