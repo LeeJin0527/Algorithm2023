@@ -1,8 +1,8 @@
 def solution(array, commands):
     answer = []
     for command in commands:
-        start, end, num = command
-        check = array[start-1: end]
+        x, y, z = command
+        check = array[x-1: y]
         check.sort()
-        answer.append(check[num-1])
+        answer.append(check[z-1])
     return answer
