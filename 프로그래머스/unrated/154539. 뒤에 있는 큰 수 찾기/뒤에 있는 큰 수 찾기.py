@@ -6,5 +6,5 @@ def solution(numbers):
             x = stack.pop()
             answer[x] = value
         stack.append(index)
-    
+        
     return answer
