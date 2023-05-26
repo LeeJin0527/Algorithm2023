@@ -1,9 +1,10 @@
 def solution(citations):
-    start = max(citations)
-    for index in range(start, -1, -1):
+    answer = 0
+    for hIndex in range(max(citations), -1, -1):
         cnt = 0
         for citation in citations:
-            if citation >= index:
+            if citation >= hIndex:
                 cnt += 1
-        if cnt >= index:
-            return index
+        if cnt >= hIndex:
+            return hIndex
+    return answer
