@@ -5,10 +5,11 @@ def solution(prices):
     while prices:
         x = prices.popleft()
         cnt = 0
-        for value in prices:
-            if x > value:
+        for each in prices:
+            if x > each:
                 cnt += 1
                 break
             cnt += 1
         answer.append(cnt)
+    
     return answer
