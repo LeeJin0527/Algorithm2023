@@ -4,10 +4,11 @@ def solution(prices):
     prices = deque(prices)
     while prices:
         x = prices.popleft()
-        count = 0
-        for check in prices:
-            count += 1
-            if x > check:
+        cnt = 0
+        for value in prices:
+            if x > value:
+                cnt += 1
                 break
-        answer.append(count)
+            cnt += 1
+        answer.append(cnt)
     return answer
