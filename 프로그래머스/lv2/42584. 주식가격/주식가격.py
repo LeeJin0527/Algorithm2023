@@ -3,11 +3,11 @@ def solution(prices):
     answer = []
     prices = deque(prices)
     while prices:
-        check = prices.popleft()
-        sec = 0
-        for price in prices:
-            sec += 1
-            if price < check:
+        x = prices.popleft()
+        count = 0
+        for check in prices:
+            count += 1
+            if x > check:
                 break
-        answer.append(sec)
+        answer.append(count)
     return answer
