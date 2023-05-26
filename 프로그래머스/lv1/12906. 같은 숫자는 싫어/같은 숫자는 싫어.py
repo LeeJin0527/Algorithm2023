@@ -1,10 +1,9 @@
 def solution(array):
     answer = []
-    stack = []
     for arr in array:
-        if len(stack) == 0:
-            stack.append(arr)
+        if len(answer) == 0:
+            answer.append(arr)
         else:
-            if stack[-1] != arr:
-                stack.append(arr)
-    return stack
+            if answer[-1] != arr:
+                answer.append(arr)
+    return answer
