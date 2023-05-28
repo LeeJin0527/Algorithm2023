@@ -1,14 +1,22 @@
+from collections import defaultdict
 def solution(players, callings):
-    rankDic = dict()
-    playersDic = dict()
+    answer = []
+    # 플레이어의 랭킹
+    rank = defaultdict(int)
+    # 플레이어의 위치
+    location = defaultdict(int)
     for index, value in enumerate(players):
-        rankDic[index+1] = value
-        playersDic[value] = index+1
-
+        rank[value] = index
+        location[index] = value
+ 
     for index, value in enumerate(callings):
-        cur_index = playersDic[value]
-        pre_index = cur_index - 1
-        playersDic[rankDic[cur_index]], playersDic[rankDic[pre_index]] = playersDic[rankDic[pre_index]], playersDic[rankDic[cur_index]]
-        rankDic[cur_index], rankDic[pre_index] = rankDic[pre_index], rankDic[cur_index]
+        backIndex = rank[value]
+        frontIndex = backIndex - 1
+        location[backIndex], location[frontIndex] = location[frontIndex] , location[backIndex]
 
-    return list(rankDic.values())
+        rank[location[backIndex]], rank[location[frontIndex]] = rank[location[frontIndex]], rank[location[backIndex]]
+        
+        
+    for loc in location:
+        answer.append(location[loc])
+    return answer
