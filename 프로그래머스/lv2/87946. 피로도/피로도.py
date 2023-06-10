@@ -1,20 +1,17 @@
-n = 0
-visited = []
-answer = 0
-def dfs(check, cnt, dungeons):
+def dfs(portion, res, visited, target, dungeons):
     global answer
-    if cnt > answer:
-        answer = cnt
-    for j in range(n):
-        if visited[j] == 0 and check >= dungeons[j][0]:
-            visited[j] = 1
-            dfs(check - dungeons[j][1], cnt +1 , dungeons)
-            visited[j] = 0
+    if res > answer:
+        answer = res 
+    for i in range(target):
+        if portion >= dungeons[i][0] and not visited[i]:
+            visited[i] = True
+            dfs(portion - dungeons[i][1], res + 1, visited, target, dungeons)
+            visited[i] = False
+    
 def solution(k, dungeons):
     global answer
-    global n
-    global visited
     n = len(dungeons)
-    visited = [0] * n
-    dfs(k, 0, dungeons)
+    visited = [False for _ in range(n)]
+    dfs(k, 0, visited, n, dungeons)
     return answer
+answer = 0
