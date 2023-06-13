@@ -1,6 +1,6 @@
 def solution(a, b, n):
     answer = 0
-    t = 0
+
     while True:
         share = int(n / a)
         answer += b * share
