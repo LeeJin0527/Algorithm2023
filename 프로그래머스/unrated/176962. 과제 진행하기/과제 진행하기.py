@@ -2,7 +2,6 @@ from collections import deque
 def solution(plans):
     answer = []
     stack = []
-    check = deque()
     plans.sort(key=lambda x: x[1])
     check = []
     for plan in plans:
